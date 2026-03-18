@@ -1,0 +1,15 @@
+require("dotenv").config();
+const express = require("express");
+const app = express();
+
+const port = process.env.PORT || 5000;
+
+app.get("/", (req, res) =>
+  res.send(
+    "Hello World! This is the backend server for the multi-vendor e-commerce platform",
+  ),
+);
+
+app.listen(port, () =>
+  console.log(`Server is running at http://localhost:${port}`),
+);
