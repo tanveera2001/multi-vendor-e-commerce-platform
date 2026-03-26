@@ -62,7 +62,7 @@ const Categorys = () => {
           >
             <div className="w-full hover:shadow-[1px_3px_19px_1px_rgba(194,188,194,1)]  h-full gap-y-2 flex-col relative  flex justify-center items-center">
               <img
-                src={`http://localhost:5173/images/admin.png`}
+                src={`http://localhost:5173/images/products/${i + 1}.webp`}
                 className="w-[70%] aspect-square"
                 alt="image"
               />
