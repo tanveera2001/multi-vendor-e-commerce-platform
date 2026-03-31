@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useState } from "react";
 import { GrMail } from "react-icons/gr";
 import { IoIosCall } from "react-icons/io";
 import { MdOutlineKeyboardArrowDown } from "react-icons/md";
@@ -21,8 +21,8 @@ const Headers = () => {
   const { pathname } = useLocation();
   const [showShidebar, setShowShidebar] = useState(true);
   const [categoryShow, setCategoryShow] = useState(true);
-  const [searchValue, setSearchValue] = useState("");
-  const [category, setCategory] = useState("");
+  const [, setSearchValue] = useState("");
+  const [, setCategory] = useState("");
 
   const user = true;
   const wishlist = 4;
