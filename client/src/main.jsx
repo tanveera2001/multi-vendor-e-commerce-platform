@@ -1,10 +1,24 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import './index.css'
-import App from './App.jsx'
+import React from "react";
+import ReactDOM from "react-dom/client";
+import "./index.css";
+import App from "./App";
 
-createRoot(document.getElementById('root')).render(
-  <StrictMode>
+import { Provider } from "react-redux";
+import { Toaster } from "react-hot-toast";
+import store from "./store/index";
+
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(
+  <Provider store={store}>
     <App />
-  </StrictMode>,
-)
+    <Toaster
+      toastOptions={{
+        position: "top-right",
+        style: {
+          background: "white",
+          color: "black",
+        },
+      }}
+    />
+  </Provider>,
+);

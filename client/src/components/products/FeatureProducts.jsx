@@ -1,9 +1,41 @@
 import { AiFillHeart, AiOutlineShoppingCart } from "react-icons/ai";
 import { FaEye } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Ratings from "../Ratings";
+import { add_to_card, messageClear } from "../../store/reducers/cardReducer";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import toast from "react-hot-toast";
 
 const FeatureProducts = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const { userInfo } = useSelector((state) => state.auth);
+  const { successMessage, errorMessage } = useSelector((state) => state.card);
+  const add_card = (id) => {
+    if (userInfo) {
+      dispatch(
+        add_to_card({
+          userId: userInfo.id,
+          quantity: 1,
+          productId: id,
+        }),
+      );
+    } else {
+      navigate("/login");
+    }
+  };
+  useEffect(() => {
+    if (successMessage) {
+      toast.success(successMessage);
+      dispatch(messageClear());
+    }
+    if (errorMessage) {
+      toast.error(errorMessage);
+      dispatch(messageClear());
+    }
+  }, [errorMessage, successMessage, dispatch]);
   return (
     <div className="w-full flex flex-wrap mx-auto">
       <div className="w-full">
@@ -37,7 +69,10 @@ const FeatureProducts = () => {
                 >
                   <FaEye />
                 </Link>
-                <li className="w-[38px] h-[38px] cursor-pointer bg-white flex justify-center items-center rounded-full hover:bg-[#7fad39] hover:text-white hover:rotate-[720deg] transition-all">
+                <li
+                  onClick={() => add_card(p._id)}
+                  className="w-[38px] h-[38px] cursor-pointer bg-white flex justify-center items-center rounded-full hover:bg-[#7fad39] hover:text-white hover:rotate-[720deg] transition-all"
+                >
                   <AiOutlineShoppingCart />
                 </li>
               </ul>

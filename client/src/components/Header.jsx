@@ -16,6 +16,7 @@ import {
   AiFillShopping,
 } from "react-icons/ai";
 import { Link, useLocation } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const Headers = () => {
   const { pathname } = useLocation();
@@ -23,8 +24,9 @@ const Headers = () => {
   const [categoryShow, setCategoryShow] = useState(true);
   const [, setSearchValue] = useState("");
   const [, setCategory] = useState("");
+  const { userInfo } = useSelector((state) => state.auth);
 
-  const user = true;
+  // const user = false;
   const wishlist = 4;
   const categorys = [
     "Clothing",
@@ -87,7 +89,7 @@ const Headers = () => {
                   </ul>
                 </div>
                 {/* USER ACCOUNT */}
-                {user ? (
+                {userInfo ? (
                   <Link
                     className="flex cursor-pointer justify-center items-center gap-2 text-sm"
                     to="/dashboard"
@@ -95,7 +97,7 @@ const Headers = () => {
                     <span>
                       <FaUser />
                     </span>
-                    <span>Tanveer Ahmed</span>
+                    <span>{userInfo.name}</span>
                   </Link>
                 ) : (
                   <Link
@@ -242,7 +244,7 @@ const Headers = () => {
                   <li>English</li>
                 </ul>
               </div>
-              {user ? (
+              {userInfo ? (
                 <Link
                   className="flex cursor-pointer justify-center items-center gap-2 text-sm"
                   to="/dashboard"
@@ -250,7 +252,7 @@ const Headers = () => {
                   <span>
                     <FaUser />
                   </span>
-                  <span>Tanveer Ahmed</span>
+                  <span>{userInfo.name}</span>
                 </Link>
               ) : (
                 <Link

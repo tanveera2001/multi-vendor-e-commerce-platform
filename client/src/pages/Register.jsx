@@ -1,12 +1,20 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { FaFacebookF } from "react-icons/fa";
 import FadeLoader from "react-spinners/FadeLoader";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { AiOutlineGoogle } from "react-icons/ai";
 import Headers from "../components/Header";
 import Footer from "../components/Footer";
+import { useSelector, useDispatch } from "react-redux";
+import toast from "react-hot-toast";
+import { customer_register, messageClear } from "../store/reducers/authReducer";
 
 const Register = () => {
+  const navigate = useNavigate();
+  const { loader, successMessage, errorMessage, userInfo } = useSelector(
+    (state) => state.auth,
+  );
+  const dispatch = useDispatch();
   const [state, setState] = useState({
     name: "",
     email: "",
@@ -21,8 +29,24 @@ const Register = () => {
   };
   const register = (e) => {
     e.preventDefault();
-    console.log(state);
+    dispatch(customer_register(state));
   };
+
+  useEffect(() => {
+    if (successMessage) {
+      toast.success(successMessage);
+      dispatch(messageClear());
+    }
+
+    if (errorMessage) {
+      toast.error(errorMessage);
+      dispatch(messageClear());
+    }
+
+    if (userInfo) {
+      navigate("/");
+    }
+  }, [successMessage, errorMessage, userInfo, dispatch, navigate]);
 
   // const user_register = async (e) => {
   //     e.preventDefault()
@@ -100,6 +124,11 @@ const Register = () => {
 
   return (
     <div>
+      {loader && (
+        <div className="w-screen h-screen flex justify-center items-center fixed left-0 top-0 bg-[#38303033] z-[999]">
+          <FadeLoader />
+        </div>
+      )}
       <Headers />
       <div className="bg-slate-200 mt-4">
         <div className="max-w-[1440px] mx-auto px-16 sm:px-5 md-lg:px-12 md:px-10 justify-center items-center p-10 sm:p-5">

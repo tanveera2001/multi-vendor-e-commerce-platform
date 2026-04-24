@@ -1,12 +1,20 @@
-import React, { useState } from "react";
+import { useState, useEffect } from "react";
 import { FaFacebookF } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { AiOutlineGoogle } from "react-icons/ai";
 import FadeLoader from "react-spinners/FadeLoader";
 import Headers from "../components/Header";
 import Footer from "../components/Footer";
-
+import { useSelector, useDispatch } from "react-redux";
+import { customer_login, messageClear } from "../store/reducers/authReducer";
+import toast from "react-hot-toast";
 const Login = () => {
+  const { loader, successMessage, errorMessage, userInfo } = useSelector(
+    (state) => state.auth,
+  );
+  const dispatch = useDispatch();
+
+  const navigate = useNavigate();
   const [state, setState] = useState({
     email: "",
     password: "",
@@ -20,12 +28,32 @@ const Login = () => {
   };
   const login = (e) => {
     e.preventDefault();
-    console.log(state);
+    dispatch(customer_login(state));
   };
 
+  useEffect(() => {
+    if (successMessage) {
+      toast.success(successMessage);
+      dispatch(messageClear());
+    }
+
+    if (errorMessage) {
+      toast.error(errorMessage);
+      dispatch(messageClear());
+    }
+
+    if (userInfo) {
+      navigate("/");
+    }
+  }, [successMessage, errorMessage, userInfo, dispatch, navigate]);
   return (
     <div>
       <Headers />
+      {loader && (
+        <div className="w-screen h-screen flex justify-center items-center fixed left-0 top-0 bg-[#38303033] z-[999]">
+          <FadeLoader />
+        </div>
+      )}
       <div className="bg-slate-200 mt-4">
         <div className="max-w-[1440px] mx-auto px-16 sm:px-5 md-lg:px-12 md:px-10 justify-center items-center p-10 sm:p-5">
           <div className="grid grid-cols-2 sm:grid-cols-1 md:grid-cols-1  w-[60%] md-lg:w-full md:w-full sm:w-full mx-auto bg-white rounded-md">
