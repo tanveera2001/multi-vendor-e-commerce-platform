@@ -1,7 +1,11 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import CartObserver from "../observer/CartObserver";
+import cartManager from "../observer/CartManager";
+import { useSelector } from "react-redux";
 import { GrMail } from "react-icons/gr";
 import { IoIosCall } from "react-icons/io";
 import { MdOutlineKeyboardArrowDown } from "react-icons/md";
+
 import {
   FaLinkedinIn,
   FaFacebookF,
@@ -15,16 +19,37 @@ import {
   AiFillHeart,
   AiFillShopping,
 } from "react-icons/ai";
-import { Link, useLocation } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 const Headers = () => {
+  const { userInfo } = useSelector((state) => state.auth);
+  const [cart, setCart] = useState(() => cartManager.getCart());
+  const navigate = useNavigate();
+
+  // 🔥 1. initial load
+  useEffect(() => {
+    if (userInfo) {
+      cartManager.loadCart(userInfo.id, userInfo.token);
+    }
+  }, [userInfo]);
+
+  // 🔥 2. subscribe observer
+  useEffect(() => {
+    const observer = new CartObserver(setCart);
+
+    cartManager.subscribe(observer);
+
+    return () => {
+      cartManager.unsubscribe(observer);
+    };
+  }, []);
+
   const { pathname } = useLocation();
+
   const [showShidebar, setShowShidebar] = useState(true);
   const [categoryShow, setCategoryShow] = useState(true);
   const [, setSearchValue] = useState("");
   const [, setCategory] = useState("");
-  const { userInfo } = useSelector((state) => state.auth);
 
   // const user = false;
   const wishlist = 4;
@@ -40,6 +65,13 @@ const Headers = () => {
     "Televisions",
   ];
 
+  const redirect_card_page = () => {
+    if (userInfo) {
+      navigate("/card");
+    } else {
+      navigate("/login");
+    }
+  };
   return (
     <div className="w-full bg-white mb-5">
       {/* TOP INFO  BAR */}
@@ -196,14 +228,19 @@ const Headers = () => {
                         {wishlist}
                       </div>
                     </div>
-                    <div className="relative flex justify-center items-center cursor-pointer w-[35px] h-[35px] rounded-full bg-[#e2e2e2]">
+                    <div
+                      onClick={redirect_card_page}
+                      className="relative flex justify-center items-center cursor-pointer w-[35px] h-[35px] rounded-full bg-[#e2e2e2]"
+                    >
                       <span className="text-xl text-orange-500">
                         <AiFillShopping />
                       </span>
 
-                      <div className="w-[20px] h-[20px] absolute bg-green-500 rounded-full text-white flex justify-center items-center -top-[3px] -right-[5px]">
-                        {wishlist}
-                      </div>
+                      {cart.length > 0 && (
+                        <div className="w-[20px] h-[20px] absolute bg-green-500 rounded-full text-white flex justify-center items-center -top-[3px] -right-[5px]">
+                          {cart.length}
+                        </div>
+                      )}
                     </div>
                   </div>
                 </div>

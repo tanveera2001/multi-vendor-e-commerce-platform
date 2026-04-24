@@ -1,0 +1,67 @@
+module.exports = [
+  {
+    name: "Tanveer Electronics",
+    email: "tanveer@example.com",
+    password: "123456",
+    method: "manual",
+    status: "active",
+    payment: "active",
+    image: "",
+    shopInfo: {
+      shopName: "Tanveer Electronics",
+      address: "Dhaka, Bangladesh",
+    },
+  },
+  {
+    name: "Tech World BD",
+    email: "techworld@example.com",
+    password: "123456",
+    method: "manual",
+    status: "active",
+    payment: "active",
+    image: "",
+    shopInfo: {
+      shopName: "Tech World BD",
+      address: "Chittagong, Bangladesh",
+    },
+  },
+  {
+    name: "Gadget Hub",
+    email: "gadgethub@example.com",
+    password: "123456",
+    method: "manual",
+    status: "active",
+    payment: "active",
+    image: "",
+    shopInfo: {
+      shopName: "Gadget Hub",
+      address: "Dhaka, Bangladesh",
+    },
+  },
+  {
+    name: "Mobile Mart",
+    email: "mobilemart@example.com",
+    password: "123456",
+    method: "manual",
+    status: "active",
+    payment: "active",
+    image: "",
+    shopInfo: {
+      shopName: "Mobile Mart",
+      address: "Sylhet, Bangladesh",
+    },
+  },
+  {
+    name: "Smart Store",
+    email: "smartstore@example.com",
+    password: "123456",
+    method: "manual",
+    status: "active",
+    payment: "active",
+    image: "",
+    shopInfo: {
+      shopName: "Smart Store",
+      address: "Khulna, Bangladesh",
+    },
+  },
+];

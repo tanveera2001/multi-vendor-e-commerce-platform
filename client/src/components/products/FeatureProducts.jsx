@@ -1,41 +1,34 @@
+import cartManager from "../../observer/CartManager";
 import { AiFillHeart, AiOutlineShoppingCart } from "react-icons/ai";
 import { FaEye } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import Ratings from "../Ratings";
-import { add_to_card, messageClear } from "../../store/reducers/cardReducer";
-import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
-import toast from "react-hot-toast";
+import { useSelector } from "react-redux";
+
+const demoProducts = [
+  { _id: "661a1b2c3d4e5f0000000001", name: "Shirt", price: 675, img: 1 },
+  { _id: "661a1b2c3d4e5f0000000002", name: "T-Shirt", price: 500, img: 2 },
+  { _id: "661a1b2c3d4e5f0000000003", name: "Jeans", price: 900, img: 3 },
+  { _id: "661a1b2c3d4e5f0000000004", name: "Polo", price: 700, img: 4 },
+];
 
 const FeatureProducts = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
 
   const { userInfo } = useSelector((state) => state.auth);
-  const { successMessage, errorMessage } = useSelector((state) => state.card);
-  const add_card = (id) => {
-    if (userInfo) {
-      dispatch(
-        add_to_card({
-          userId: userInfo.id,
-          quantity: 1,
-          productId: id,
-        }),
-      );
-    } else {
+
+  const add_card = async (productId) => {
+    if (!userInfo) {
       navigate("/login");
+      return;
     }
+
+    await cartManager.addToCart({
+      userId: userInfo.id,
+      productId,
+      quantity: 1,
+    });
   };
-  useEffect(() => {
-    if (successMessage) {
-      toast.success(successMessage);
-      dispatch(messageClear());
-    }
-    if (errorMessage) {
-      toast.error(errorMessage);
-      dispatch(messageClear());
-    }
-  }, [errorMessage, successMessage, dispatch]);
   return (
     <div className="w-full flex flex-wrap mx-auto">
       <div className="w-full">
@@ -45,9 +38,9 @@ const FeatureProducts = () => {
         </div>
       </div>
       <div className="w-full grid grid-cols-5 md-lg:grid-cols-4 md:grid-cols-2 sm:grid-cols-1 gap-6">
-        {[1, 2, 3, 4, 5, 6, 7].map((p, i) => (
+        {demoProducts.map((p) => (
           <div
-            key={i}
+            key={p._id}
             className="border group transition-all duration-500 hover:shadow-md hover:-mt-3"
           >
             <div className="relative overflow-hidden">
@@ -56,7 +49,7 @@ const FeatureProducts = () => {
               </div>
               <img
                 className="sm:w-full w-full aspect-square"
-                src={`http://localhost:5173/images/products/${p}.webp`}
+                src={`http://localhost:5173/images/products/${p.img}.webp`}
                 alt="product image"
               />
               <ul className="flex transition-all duration-700 -bottom-10 justify-center items-center gap-2 absolute w-full group-hover:bottom-3">
