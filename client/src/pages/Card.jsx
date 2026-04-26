@@ -15,6 +15,8 @@ const Card = () => {
     const observer = new CartObserver((cartData) => {
       const data = cartData || [];
 
+      console.log(data);
+
       setCardProducts(data);
 
       const outStock = data.filter((item) =>
@@ -97,8 +99,12 @@ const Card = () => {
                               <div className="flex gap-2 justify-start items-center">
                                 <img
                                   className="w-[80px] h-[80px]"
-                                  src={item.productInfo.images?.[0]}
-                                  alt="product"
+                                  src={
+                                    item.productInfo?.images?.[0]
+                                      ? item.productInfo.images[0]
+                                      : "/images/placeholder.webp"
+                                  }
+                                  alt={item.productInfo?.name || "product"}
                                 />
                                 <div className="pr-4 text-slate-600">
                                   <h2 className="text-md">

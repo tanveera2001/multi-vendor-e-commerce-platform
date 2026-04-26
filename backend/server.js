@@ -17,6 +17,7 @@ app.use(
 
 app.use(bodyParser.json());
 app.use(cookieParser());
+app.use("/images", express.static("public/images"));
 
 // app.use("/api", require("./routes/chatRoutes"));
 
