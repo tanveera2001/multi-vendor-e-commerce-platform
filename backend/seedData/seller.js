@@ -8,7 +8,7 @@ module.exports = [
     payment: "active",
     image: "",
     shopInfo: {
-      shopName: "Tanveer Electronics",
+      shopName: "Tanveer Sports & Fashion",
       address: "Dhaka, Bangladesh",
     },
   },
@@ -21,7 +21,7 @@ module.exports = [
     payment: "active",
     image: "",
     shopInfo: {
-      shopName: "Tech World BD",
+      shopName: "Tech World Electronics",
       address: "Chittagong, Bangladesh",
     },
   },
@@ -34,7 +34,7 @@ module.exports = [
     payment: "active",
     image: "",
     shopInfo: {
-      shopName: "Gadget Hub",
+      shopName: "Gadget Hub Accessories",
       address: "Dhaka, Bangladesh",
     },
   },
@@ -47,7 +47,7 @@ module.exports = [
     payment: "active",
     image: "",
     shopInfo: {
-      shopName: "Mobile Mart",
+      shopName: "Mobile Mart Store",
       address: "Sylhet, Bangladesh",
     },
   },
@@ -60,7 +60,7 @@ module.exports = [
     payment: "active",
     image: "",
     shopInfo: {
-      shopName: "Smart Store",
+      shopName: "Smart Lifestyle Store",
       address: "Khulna, Bangladesh",
     },
   },
